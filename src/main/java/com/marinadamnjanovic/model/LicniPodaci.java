@@ -4,7 +4,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.Collection;
 
 @Entity
 @Table(name="licnipodaci")
@@ -16,36 +15,46 @@ public class LicniPodaci {
     private int id;
 
     @NotEmpty
+    @Column(name = "ime")
     private String ime;
 
     @NotEmpty
+    @Column(name = "prezime")
     private String prezime;
 
-    private Date datumRođenja;
+    @Column(name = "datumRodenja")
+    private Date datumRodenja;
 
+    @NotEmpty
+    @Column(name = "lk")
     private long lk;
 
+    @Column(name = "email")
     private String email;
 
+    @Column(name = "telefon")
     private long telefon;
 
+    @Column(name = "adresa")
     private String adresa;
 
+    @Column(name = "opstina")
     private int opstina;
 
+    @Column(name = "bracnoStanje")
     private int bracnoStanje;
 
+    @Column(name = "zanimanje")
     private String zanimanje;
 
-    @Column(name = "id_zaposleni")
-    private String idZaposleni;
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="id_zaposleni")
+    private Zaposleni zaposleni;
 
-    public java.util.Collection<Zaposleni> zaposleni;
-
-    public LicniPodaci(String ime, String prezime, Date datumRođenja, long lk, String email, long telefon, String adresa, int opstina, int bracnoStanje, String zanimanje, String idZaposleni, Collection<Zaposleni> zaposleni) {
+    public LicniPodaci(String ime, String prezime, Date datumRodenja, long lk, String email, long telefon, String adresa, int opstina, int bracnoStanje, String zanimanje, Zaposleni zaposleni) {
         this.ime = ime;
         this.prezime = prezime;
-        this.datumRođenja = datumRođenja;
+        this.datumRodenja = datumRodenja;
         this.lk = lk;
         this.email = email;
         this.telefon = telefon;
@@ -53,7 +62,6 @@ public class LicniPodaci {
         this.opstina = opstina;
         this.bracnoStanje = bracnoStanje;
         this.zanimanje = zanimanje;
-        this.idZaposleni = idZaposleni;
         this.zaposleni = zaposleni;
     }
 
@@ -85,12 +93,12 @@ public class LicniPodaci {
         this.prezime = prezime;
     }
 
-    public Date getDatumRođenja() {
-        return datumRođenja;
+    public Date getDatumRodenja() {
+        return datumRodenja;
     }
 
-    public void setDatumRođenja(Date datumRođenja) {
-        this.datumRođenja = datumRođenja;
+    public void setDatumRodenja(Date datumRodenja) {
+        this.datumRodenja = datumRodenja;
     }
 
     public long getLk() {
@@ -149,11 +157,11 @@ public class LicniPodaci {
         this.zanimanje = zanimanje;
     }
 
-    public String getIdZaposleni() {
-        return idZaposleni;
+    public Zaposleni getZaposleni() {
+        return zaposleni;
     }
 
-    public void setIdZaposleni(String idZaposleni) {
-        this.idZaposleni = idZaposleni;
+    public void setZaposleni(Zaposleni zaposleni) {
+        this.zaposleni = zaposleni;
     }
 }

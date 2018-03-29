@@ -19,7 +19,9 @@ public class ZaposleniServiceImpl implements ZaposleniService{
     public void updateZaposleni(Zaposleni zaposleni){
         Zaposleni entity = zaposleniDAO.getZaposleniById(zaposleni.getId());
         if(entity!=null){
-
+            entity.setRola(zaposleni.getRola());
+            entity.setUsername(zaposleni.getUsername());
+            entity.setPassword(zaposleni.getPassword());
         }
     }
 

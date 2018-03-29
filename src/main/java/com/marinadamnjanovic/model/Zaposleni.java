@@ -3,7 +3,8 @@ package com.marinadamnjanovic.model;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="zaposleni")
@@ -13,21 +14,30 @@ public class Zaposleni {
     @Column(name = "id_zaposleni")
     private int id;
 
+    @NotEmpty
+    @Column(name = "username")
     private String username;
 
+    @NotEmpty
+    @Column(name = "password")
     private String password;
 
     @NotEmpty
+    @Column(name = "rola")
     private int rola;
 
-    public java.util.Collection<Zahtev> zahtev;
+    @OneToOne(mappedBy = "id_zaposleni")
+    private LicniPodaci licniPodaci;
 
-    public Zaposleni(int id, String username, String password, int rola, Collection<Zahtev> zahtev) {
+    @OneToMany(mappedBy = "id_zaposleni")
+    private List<Zahtev> zahtevi = new ArrayList<>();
+
+    public Zaposleni(int id, String username, String password, int rola, List<Zahtev> zahtev) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.rola = rola;
-        this.zahtev = zahtev;
+        this.zahtevi = zahtev;
     }
 
     public String getUsername() {
@@ -66,47 +76,12 @@ public class Zaposleni {
 
     }
 
-    public java.util.Collection<Zahtev> getZahtev() {
-        if (zahtev == null)
-            zahtev = new java.util.HashSet<Zahtev>();
-        return zahtev;
+    public List<Zahtev> getZahtevi() {
+        return zahtevi;
     }
 
-    public java.util.Iterator getIteratorZahtev() {
-        if (zahtev == null)
-            zahtev = new java.util.HashSet<Zahtev>();
-        return zahtev.iterator();
-    }
-
-
-    public void setZahtev(java.util.Collection<Zahtev> newZahtev) {
-        removeAllZahtev();
-        for (java.util.Iterator iter = newZahtev.iterator(); iter.hasNext();)
-            addZahtev((Zahtev)iter.next());
-    }
-
-
-    public void addZahtev(Zahtev newZahtev) {
-        if (newZahtev == null)
-            return;
-        if (this.zahtev == null)
-            this.zahtev = new java.util.HashSet<Zahtev>();
-        if (!this.zahtev.contains(newZahtev))
-            this.zahtev.add(newZahtev);
-    }
-
-
-    public void removeZahtev(Zahtev oldZahtev) {
-        if (oldZahtev == null)
-            return;
-        if (this.zahtev != null)
-            if (this.zahtev.contains(oldZahtev))
-                this.zahtev.remove(oldZahtev);
-    }
-
-    public void removeAllZahtev() {
-        if (zahtev != null)
-            zahtev.clear();
+    public void setZahtevi(List<Zahtev> zahtevi) {
+        this.zahtevi = zahtevi;
     }
 
 }

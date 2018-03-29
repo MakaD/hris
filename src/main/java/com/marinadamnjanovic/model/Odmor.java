@@ -8,27 +8,32 @@ import java.sql.Date;
 @Entity
 @Table(name="odmor")
 public class Odmor extends Zahtev {
+
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id_odmor")
     private int id;
 
     @NotEmpty
+    @Column(name = "datumOd")
     private Date datumOd;
 
     @NotEmpty
+    @Column(name = "datumDo")
     private Date datumDo;
 
     @NotEmpty
+    @Column(name = "povod")
     private String povod;
 
-    @Column(name = "id_zahtev")
-    private int idZahtev;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "id_zahtev")
+    private Zahtev idZahtev;
 
     public Odmor() {
     }
 
-    public Odmor(Date datumOd, Date datumDo, String povod, int idZahtev) {
+    public Odmor(Date datumOd, Date datumDo, String povod, Zahtev idZahtev) {
         this.datumOd = datumOd;
         this.datumDo = datumDo;
         this.povod = povod;
@@ -67,11 +72,12 @@ public class Odmor extends Zahtev {
         this.id = id;
     }
 
-    public int getIdZahtev() {
+    public Zahtev getIdZahtev() {
         return idZahtev;
     }
 
-    public void setIdZahtev(int idZahtev) {
+    public void setIdZahtev(Zahtev idZahtev) {
         this.idZahtev = idZahtev;
     }
+
 }

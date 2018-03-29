@@ -3,31 +3,37 @@ package com.marinadamnjanovic.model;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name="zahtev")
 public class Zahtev {
+
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id_zahtev")
     private int id;
 
     @NotEmpty
+    @Column(name = "status")
     private int status;
 
     @NotEmpty
+    @Column(name = "predmet")
     private String predmet;
 
     @NotEmpty
-    private int datum;
+    @Column(name = "datum")
+    private Date datum;
 
-    @Column(name = "id_zaposleni")
-    private int idZaposleni;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "id_zaposleni")
+    private Zaposleni idZaposleni;
 
     public Zahtev() {
     }
 
-    public Zahtev(int status, String predmet, int datum, int idZaposleni) {
+    public Zahtev(int status, String predmet, Date datum, Zaposleni idZaposleni) {
         this.status = status;
         this.predmet = predmet;
         this.datum = datum;
@@ -50,11 +56,11 @@ public class Zahtev {
         this.predmet = predmet;
     }
 
-    public int getDatum() {
+    public Date getDatum() {
         return datum;
     }
 
-    public void setDatum(int datum) {
+    public void setDatum(Date datum) {
         this.datum = datum;
     }
 
@@ -66,11 +72,12 @@ public class Zahtev {
         this.id = id;
     }
 
-    public int getIdZaposleni() {
+    public Zaposleni getIdZaposleni() {
         return idZaposleni;
     }
 
-    public void setIdZaposleni(int idZaposleni) {
+    public void setIdZaposleni(Zaposleni idZaposleni) {
         this.idZaposleni = idZaposleni;
     }
+
 }

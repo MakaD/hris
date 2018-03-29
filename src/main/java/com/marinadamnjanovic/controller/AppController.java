@@ -16,4 +16,9 @@ public class AppController {
     public String backHome(){
         return "index";
     }
+
+    @RequestMapping("/")
+    public String Login(){
+        return "login";
+    }
 }
